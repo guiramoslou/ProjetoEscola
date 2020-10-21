@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -18,20 +17,31 @@ public class AlunoController {
     private AlunoService alunoService;
 
     @GetMapping()
-    public ResponseEntity<List<String>> getAlunos() {
-        return new ResponseEntity<List<String>>(alunoService.getAlunos(), HttpStatus.OK);
+    public ResponseEntity<List<Aluno>> getAlunos() {
+        return new ResponseEntity<List<Aluno>>(alunoService.getAlunos(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getAluno(@PathVariable("id") Long id) {
+    public ResponseEntity<Aluno> getAluno(@PathVariable("id") Long id) {
         return ResponseEntity.ok(alunoService.getAlunoByIndex(id));
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> createAluno(@RequestBody Aluno aluno) {
+    public ResponseEntity<Aluno> createAluno(@RequestBody Aluno aluno) {
         alunoService.createAluno(aluno);
-        return ResponseEntity.created(URI.create("/aluno/223344")).build();
-        //return new ResponseEntity(HttpStatus.CREATED);
+        //return ResponseEntity.created(URI.create("/aluno/{id}")).build();
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Aluno> updateAluno(@RequestBody Aluno aluno, @PathVariable Long id) {
+        return ResponseEntity.ok(alunoService.updateAluno(aluno));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteAluno(@PathVariable Long id) {
+        alunoService.deleteAlunoById(id);
+        //return ResponseEntity.ok("Aluno deletado" + id);
     }
 }
