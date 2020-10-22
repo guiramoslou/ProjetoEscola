@@ -1,21 +1,13 @@
-package com.example.demo.entity;
+package com.example.demo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "MENTOR_TBL")
-public class Mentor {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class MentorDTO {
     private Long id;
     private String name;
     private String classe;
