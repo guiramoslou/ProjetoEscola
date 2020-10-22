@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.MentorDTO;
 import com.example.demo.entity.Mentor;
 import com.example.demo.service.MentorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +18,23 @@ public class MentorController {
     MentorService mentorService;
 
     @GetMapping
-    public ResponseEntity<List<Mentor>> getMentores(){
+    public ResponseEntity<List<MentorDTO>> getMentores() {
         return ResponseEntity.ok(mentorService.getMentores());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Mentor> getMentorById(@PathVariable Long id){
+    public ResponseEntity<MentorDTO> getMentorById(@PathVariable Long id) {
         return ResponseEntity.ok(mentorService.getMentorById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Mentor> createMentor(@RequestBody Mentor mentor) {
-        return ResponseEntity.ok(mentorService.createMentor(mentor));
+    public ResponseEntity<MentorDTO> createMentor(@RequestBody MentorDTO mentorDTO) {
+        return ResponseEntity.ok(mentorService.createMentor(mentorDTO));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Mentor> updateMentor(@RequestBody Mentor mentor, @PathVariable Long id) {
-        return ResponseEntity.ok(mentorService.updateMentor(mentor));
+    public ResponseEntity<MentorDTO> updateMentor(@RequestBody MentorDTO mentorDTO, @PathVariable Long id) {
+        return ResponseEntity.ok(mentorService.updateMentor(mentorDTO, id));
     }
 
     @DeleteMapping("/{id}")

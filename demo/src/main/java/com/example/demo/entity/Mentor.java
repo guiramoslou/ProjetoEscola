@@ -19,4 +19,5 @@ public class Mentor {
     private Long id;
     private String name;
     private String classe;
+    private Boolean active;
 }
