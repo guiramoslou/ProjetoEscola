@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.MentorDTO;
-import com.example.demo.entity.Mentor;
 import com.example.demo.service.MentorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +23,7 @@ public class MentorController {
 
     @GetMapping("/{id}")
     public ResponseEntity<MentorDTO> getMentorById(@PathVariable Long id) {
-        return ResponseEntity.ok(mentorService.getMentorById(id));
+        return ResponseEntity.ok(mentorService.getMentorById(id).get());
     }
 
     @PostMapping

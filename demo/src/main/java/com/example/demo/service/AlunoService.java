@@ -19,15 +19,6 @@ public class AlunoService {
     private AlunoRepository repository;
 
     public List<AlunoDTO> getAlunos() {
-//        List<AlunoDTO> listAlunoDTO = new ArrayList<AlunoDTO>();
-//        for (Aluno aluno : repository.findAll()) {
-//            AlunoDTO alunoDTO = new AlunoDTO();
-//            alunoDTO.setId(aluno.getId());
-//            alunoDTO.setName(aluno.getName());
-//            alunoDTO.setClasse(aluno.getClasse());
-//            listAlunoDTO.add(alunoDTO);
-//        }
-//        return listAlunoDTO;
         return repository.findAll()
                 .parallelStream()
                 .map(AlunoMapper::toAlunoDTO)
@@ -35,12 +26,6 @@ public class AlunoService {
     }
 
     public Optional<AlunoDTO> getAlunoByIndex(Long id) {
-//        AlunoDTO alunoDTO = new AlunoDTO();
-//        Aluno aluno = repository.findById(id).orElse(null);
-//        alunoDTO.setId(aluno.getId());
-//        alunoDTO.setName(aluno.getName());
-//        alunoDTO.setClasse(aluno.getClasse());
-//        return alunoDTO;
         return repository.findById(id).map(AlunoMapper::toAlunoDTO);
     }
 
@@ -49,22 +34,14 @@ public class AlunoService {
     }
 
     public AlunoDTO createAluno(AlunoDTO alunoDTO) {
-//        Aluno aluno = new Aluno();
-//        aluno.setName(alunoDTO.getName());
-//        aluno.setClasse(alunoDTO.getClasse());
-//        Aluno savedAluno = repository.save(aluno);
-//        alunoDTO.setId(savedAluno.getId());
         Aluno aluno = AlunoMapper.toAluno(alunoDTO);
         repository.save(aluno);
         return AlunoMapper.toAlunoDTO(aluno);
     }
 
     public AlunoDTO updateAluno(AlunoDTO alunoDTO, Long id) {
-        Aluno alunoExistente = getAlunoByIndexInRepository(id).get();
-        alunoExistente.setPrograma(alunoDTO.getPrograma());
-        alunoExistente.setActive(alunoDTO.getActive());
-        alunoExistente.setClasse(alunoDTO.getClasse());
-        alunoExistente.setName(alunoDTO.getName());
+        Aluno alunoExistente = AlunoMapper.toAluno(alunoDTO);
+        alunoExistente.setId(id);
         repository.save(alunoExistente);
         return AlunoMapper.toAlunoDTO(alunoExistente);
     }

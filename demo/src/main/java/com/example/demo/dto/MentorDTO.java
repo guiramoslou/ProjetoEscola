@@ -11,4 +11,5 @@ public class MentorDTO {
     private Long id;
     private String name;
     private String classe;
+    private Boolean active;
 }
