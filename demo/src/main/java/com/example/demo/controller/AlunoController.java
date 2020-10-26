@@ -23,7 +23,10 @@ public class AlunoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AlunoDTO> getAluno(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(alunoService.getAlunoByIndex(id));
+//        return ResponseEntity.ok(alunoService.getAlunoByIndex(id));
+        return alunoService.getAlunoByIndex(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -40,7 +43,6 @@ public class AlunoController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteAluno(@PathVariable Long id) {
         alunoService.deleteAlunoById(id);
     }

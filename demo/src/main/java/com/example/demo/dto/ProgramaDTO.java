@@ -1,17 +1,19 @@
 package com.example.demo.dto;
 
-import com.example.demo.entity.Programa;
+import com.example.demo.entity.Aluno;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AlunoDTO {
+public class ProgramaDTO {
     private Long id;
     private String name;
-    private String classe;
-    private Programa programa;
-    private Boolean active;
+    private LocalDate startDate;
+    private List<Aluno> listaDeAlunos;
 }
