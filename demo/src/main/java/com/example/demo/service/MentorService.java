@@ -73,7 +73,6 @@ public class MentorService {
 
     @Transactional
     public void deleteMentor(Long id) {
-        Mentor mentor = mentorRepository.findById(id).get();
-        mentor.setActive(false);
+        mentorRepository.findById(id).get().setActive(false);
     }
 }

@@ -49,7 +49,6 @@ public class AlunoService {
 
     @Transactional
     public void deleteAlunoById(Long id) {
-        Aluno aluno = repository.findById(id).orElse(null);
-        aluno.setActive(false);
+        repository.findById(id).get().setActive(false);
     }
 }

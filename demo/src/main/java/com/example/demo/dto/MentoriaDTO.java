@@ -13,4 +13,5 @@ public class MentoriaDTO {
     private Long id;
     private Aluno aluno;
     private Mentor mentor;
+    private Boolean active;
 }
