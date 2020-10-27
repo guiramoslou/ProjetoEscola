@@ -23,7 +23,6 @@ public class AlunoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AlunoDTO> getAluno(@PathVariable("id") Long id) {
-//        return ResponseEntity.ok(alunoService.getAlunoByIndex(id));
         return alunoService.getAlunoByIndex(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());

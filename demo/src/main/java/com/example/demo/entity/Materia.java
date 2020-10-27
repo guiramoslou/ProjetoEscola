@@ -10,16 +10,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "MENTORIA_TBL")
-public class Mentoria {
+@Table(name = "MATERIA_TBL")
+public class Materia {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "aluno_id")
-    private Aluno aluno;
-    @ManyToOne
-    @JoinColumn(name = "mentor_id")
-    private Mentor mentor;
+    private String name;
     private Boolean active;
 }
