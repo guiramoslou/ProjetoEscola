@@ -1,9 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Programa;
+import com.example.demo.dto.ProgramaDTO;
 import com.example.demo.service.ProgramaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,28 +16,27 @@ public class ProgramaController {
     ProgramaService programaService;
 
     @GetMapping
-    public ResponseEntity<List<Programa>> getProgramas(){
+    public ResponseEntity<List<ProgramaDTO>> getProgramas() {
         return ResponseEntity.ok(programaService.getProgramas());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Programa> getProgramaById(@PathVariable Long id){
+    public ResponseEntity<ProgramaDTO> getProgramaById(@PathVariable Long id) {
         return ResponseEntity.ok(programaService.getProgramaById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Programa> createPrograma(@RequestBody Programa programa) {
-        return ResponseEntity.ok(programaService.createPrograma(programa));
+    public ResponseEntity<ProgramaDTO> createPrograma(@RequestBody ProgramaDTO programaDTO) {
+        return ResponseEntity.ok(programaService.createPrograma(programaDTO));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Programa> updatePrograma(@RequestBody Programa programa, @PathVariable Long id) {
-        return ResponseEntity.ok(programaService.updatePrograma(programa));
+    public ResponseEntity<ProgramaDTO> updatePrograma(@RequestBody ProgramaDTO programaDTO, @PathVariable Long id) {
+        return ResponseEntity.ok(programaService.updatePrograma(programaDTO, id));
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void deleteMentor(@PathVariable Long id) {
+    public void deletePrograma(@PathVariable Long id) {
         programaService.deleteProgramaById(id);
     }
 }

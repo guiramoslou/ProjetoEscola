@@ -21,4 +21,5 @@ public class Programa {
     private LocalDate startDate;
     @OneToMany(mappedBy = "programa")
     private List<Aluno> listaDeAlunos;
+    private Boolean active;
 }

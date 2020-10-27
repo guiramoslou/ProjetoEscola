@@ -16,4 +16,5 @@ public class ProgramaDTO {
     private String name;
     private LocalDate startDate;
     private List<Aluno> listaDeAlunos;
+    private Boolean active;
 }
