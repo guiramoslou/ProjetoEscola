@@ -27,13 +27,17 @@ public class AvaliacaoController {
     }
 
     @PostMapping
-    public ResponseEntity<AvaliacaoDTO> createAvaliacao(@RequestBody AvaliacaoDTO avaliacaoDTO) {
-        return ResponseEntity.ok(avaliacaoService.createAvaliacao(avaliacaoDTO));
+    public ResponseEntity<AvaliacaoDTO> avaliarAluno(@RequestParam Long alunoId,
+                                                     @RequestParam Long mentorId,
+                                                     @RequestParam Long materiaId,
+                                                     @RequestParam Double nota) {
+        return ResponseEntity.ok(avaliacaoService.avaliarAluno(alunoId, mentorId, materiaId, nota));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AvaliacaoDTO> updateAvaliacao(@RequestBody AvaliacaoDTO avaliacaoDTO, @PathVariable Long id) {
-        return ResponseEntity.ok(avaliacaoService.updateAvaliacao(avaliacaoDTO, id));
+    public ResponseEntity<AvaliacaoDTO> updateAvaliacao(@PathVariable Long id,
+                                                        @RequestParam Double nota) {
+        return ResponseEntity.ok(avaliacaoService.updateNotaAvaliacao(id, nota));
     }
 
     @DeleteMapping("/{id}")
