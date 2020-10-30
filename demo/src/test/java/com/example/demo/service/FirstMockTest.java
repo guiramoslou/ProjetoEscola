@@ -24,8 +24,8 @@ public class FirstMockTest {
 
 //    @Test
     public void testGetAlunoById() {
-        var id = 1L;
-        var programId = 2L;
+        Long id = 1L;
+        Long programId = 2L;
 
         Aluno aluno = new Aluno();
         aluno.setId(id);

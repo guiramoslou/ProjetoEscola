@@ -1,0 +1,12 @@
+package com.example.demo.mapper;
+
+import com.example.demo.dto.ProgramaDTO;
+import com.example.demo.entity.Programa;
+import org.mapstruct.Mapper;
+
+@Mapper(componentModel = "spring")
+public interface ProgramaMapper {
+    Programa toPrograma(ProgramaDTO programaDTO);
+
+    ProgramaDTO toProgramaDTO(Programa programa);
+}

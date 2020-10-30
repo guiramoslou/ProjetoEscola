@@ -1,11 +1,11 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.AvaliacaoDTO;
-import com.example.demo.dto.mapper.AlunoMapper;
-import com.example.demo.dto.mapper.AvaliacaoMapper;
-import com.example.demo.dto.mapper.MateriaMapper;
-import com.example.demo.dto.mapper.MentorMapper;
 import com.example.demo.entity.Avaliacao;
+import com.example.demo.mapper.AlunoMapper;
+import com.example.demo.mapper.AvaliacaoMapper;
+import com.example.demo.mapper.MateriaMapper;
+import com.example.demo.mapper.MentorMapper;
 import com.example.demo.repository.AvaliacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,30 +30,42 @@ public class AvaliacaoService {
     @Autowired
     MateriaService materiaService;
 
+    @Autowired
+    AlunoMapper alunoMapper;
+
+    @Autowired
+    MentorMapper mentorMapper;
+
+    @Autowired
+    MateriaMapper materiaMapper;
+
+    @Autowired
+    AvaliacaoMapper avaliacaoMapper;
+
     @Deprecated
     public AvaliacaoDTO createAvaliacao(AvaliacaoDTO avaliacaoDTO) {
-        Avaliacao avaliacao = AvaliacaoMapper.toAvaliacao(avaliacaoDTO);
+        Avaliacao avaliacao = avaliacaoMapper.toAvaliacao(avaliacaoDTO);
         avaliacaoRepository.save(avaliacao);
-        return AvaliacaoMapper.toAvaliacaoDTO(avaliacao);
+        return avaliacaoMapper.toAvaliacaoDTO(avaliacao);
     }
 
     public List<AvaliacaoDTO> getAvaliacoes() {
         return avaliacaoRepository.findAll()
                 .stream()
-                .map(AvaliacaoMapper::toAvaliacaoDTO)
+                .map(avaliacaoMapper::toAvaliacaoDTO)
                 .collect(Collectors.toList());
     }
 
     public Optional<AvaliacaoDTO> getAvaliacaoById(Long id) {
-        return avaliacaoRepository.findById(id).map(AvaliacaoMapper::toAvaliacaoDTO);
+        return avaliacaoRepository.findById(id).map(avaliacaoMapper::toAvaliacaoDTO);
     }
 
     @Deprecated
     public AvaliacaoDTO updateAvaliacao(AvaliacaoDTO avaliacaoDTO, Long id) {
-        Avaliacao avaliacao = AvaliacaoMapper.toAvaliacao(avaliacaoDTO);
+        Avaliacao avaliacao = avaliacaoMapper.toAvaliacao(avaliacaoDTO);
         avaliacao.setId(id);
         avaliacaoRepository.save(avaliacao);
-        return AvaliacaoMapper.toAvaliacaoDTO(avaliacao);
+        return avaliacaoMapper.toAvaliacaoDTO(avaliacao);
     }
 
     @Transactional
@@ -64,19 +76,19 @@ public class AvaliacaoService {
     public AvaliacaoDTO avaliarAluno(Long alunoId, Long mentorId, Long materiaId, Double nota) {
         Avaliacao avaliacao = new Avaliacao();
         avaliacao.setActive(true);
-        avaliacao.setAluno(AlunoMapper.toAluno(alunoService.getAlunoByIndex(alunoId).get()));
-        avaliacao.setMentor(MentorMapper.toMentor(mentorService.getMentorById(mentorId).get()));
-        avaliacao.setMateria(MateriaMapper.toMateria(materiaService.getMateriaById(materiaId).get()));
+        avaliacao.setAluno(alunoMapper.toAluno(alunoService.getAlunoByIndex(alunoId).get()));
+        avaliacao.setMentor(mentorMapper.toMentor(mentorService.getMentorById(mentorId).get()));
+        avaliacao.setMateria(materiaMapper.toMateria(materiaService.getMateriaById(materiaId).get()));
         avaliacao.setNota(nota);
         avaliacao.setData(LocalDate.now());
         avaliacaoRepository.save(avaliacao);
-        return AvaliacaoMapper.toAvaliacaoDTO(avaliacao);
+        return avaliacaoMapper.toAvaliacaoDTO(avaliacao);
     }
 
     public AvaliacaoDTO updateNotaAvaliacao(Long id, Double nota) {
         Avaliacao avaliacao = avaliacaoRepository.findById(id).get();
         avaliacao.setNota(nota);
         avaliacaoRepository.save(avaliacao);
-        return AvaliacaoMapper.toAvaliacaoDTO(avaliacao);
+        return avaliacaoMapper.toAvaliacaoDTO(avaliacao);
     }
 }
