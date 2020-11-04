@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 
 public class FirstSimpleTest {
 
-//    @Test
+    @Test
     public void test() {
-        Assertions.assertEquals(true, false);
+        Assertions.assertEquals(true, true);
     }
 }
