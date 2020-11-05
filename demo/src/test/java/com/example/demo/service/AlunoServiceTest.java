@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,9 +24,6 @@ public class AlunoServiceTest {
 
     @Mock
     AlunoRepository alunoRepository;
-
-//    @Mock
-//    AlunoMapper alunoMapper;
 
     @Spy
     AlunoMapper alunoMapper = Mappers.getMapper(AlunoMapper.class);
@@ -50,8 +46,6 @@ public class AlunoServiceTest {
         alunoListDTO.add(alunoDoisDTO);
 
         when(alunoRepository.findAll()).thenReturn(alunoList);
-//        when(alunoMapper.toAlunoDTO(alunoUm)).thenReturn(alunoUmDTO);
-//        when(alunoMapper.toAlunoDTO(alunoDois)).thenReturn(alunoDoisDTO);
 
         List<AlunoDTO> getAlunos = this.alunoService.getAlunos();
 
@@ -78,7 +72,6 @@ public class AlunoServiceTest {
         alunoDTO.setPrograma(null);
 
         when(alunoRepository.findById(id)).thenReturn(Optional.of(aluno));
-//        when(alunoMapper.toAlunoDTO(aluno)).thenReturn(alunoDTO);
 
         Optional<AlunoDTO> alunoByIndex = this.alunoService.getAlunoByIndex(id);
 
