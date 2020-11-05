@@ -20,7 +20,8 @@ public class ProgramaService {
     ProgramaMapper programaMapper;
 
     public ProgramaDTO createPrograma(ProgramaDTO programaDTO) {
-        Programa programa = programaRepository.save(programaMapper.toPrograma(programaDTO));
+        Programa programa = programaMapper.toPrograma(programaDTO);
+        programaRepository.save(programa);
         return programaMapper.toProgramaDTO(programa);
     }
 
