@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Data
@@ -26,7 +27,13 @@ public class Avaliacao {
     @ManyToOne
     @JoinColumn(name = "aluno_id")
     private Aluno aluno;
+    @FutureOrPresent
     private LocalDate data;
+    @NotNull
+    @Max(value = 10)
+    @NotEmpty
+    @NotBlank
+    @PositiveOrZero
     private Double nota;
     private Boolean active;
 }
