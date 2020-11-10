@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class AlunoController {
 
     @GetMapping()
     public ResponseEntity<List<AlunoDTO>> getAlunos() {
-        return new ResponseEntity<List<AlunoDTO>>(alunoService.getAlunos(), HttpStatus.ACCEPTED);
+        return new ResponseEntity<List<AlunoDTO>>(alunoService.getAlunos(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -30,19 +31,34 @@ public class AlunoController {
 
     @PostMapping
     public ResponseEntity<AlunoDTO> createAluno(@RequestBody AlunoDTO alunoDTO) {
-        alunoService.createAluno(alunoDTO);
-        return new ResponseEntity(HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<AlunoDTO>(alunoService.createAluno(alunoDTO), HttpStatus.CREATED);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid parameters", exception);
+        }
     }
-
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<AlunoDTO> updateAluno(@PathVariable("id") Long id,
                                                 @RequestBody AlunoDTO alunoDTO) {
-        return ResponseEntity.ok(alunoService.updateAluno(alunoDTO, id));
+        try {
+            return new ResponseEntity<AlunoDTO>(alunoService.updateAluno(alunoDTO, id), HttpStatus.ACCEPTED);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Invalid parameters", exception
+            );
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAluno(@PathVariable Long id) {
-        alunoService.deleteAlunoById(id);
+    public ResponseEntity deleteAluno(@PathVariable Long id) {
+        try {
+            alunoService.deleteAlunoById(id);
+            return ResponseEntity.accepted().build();
+        } catch (Exception exception) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Id not found", exception
+            );
+        }
     }
 }
