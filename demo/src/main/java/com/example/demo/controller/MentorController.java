@@ -57,7 +57,7 @@ public class MentorController {
             mentorService.deleteMentor(id);
             return ResponseEntity.accepted().build();
         } catch (Exception exception) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id not found", exception);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id not found", exception);
         }
     }
 }
