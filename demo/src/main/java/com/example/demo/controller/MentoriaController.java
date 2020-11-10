@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -18,29 +19,49 @@ public class MentoriaController {
     @PostMapping(value = "/{mentorId}/{alunoId}")
     public ResponseEntity<MentoriaDTO> createMentoria(@PathVariable("mentorId") Long mentorId,
                                                       @PathVariable("alunoId") Long alunoId) {
-        return ResponseEntity.ok(mentoriaService.createMentoria(mentorId, alunoId));
+        try {
+            return new ResponseEntity(mentoriaService.createMentoria(mentorId, alunoId), HttpStatus.CREATED);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid parameters", exception);
+        }
     }
 
     @GetMapping
     public ResponseEntity<List<MentoriaDTO>> getMentorias() {
-        return ResponseEntity.ok(mentoriaService.getMentorias());
+        try {
+            return new ResponseEntity(mentoriaService.getMentorias(), HttpStatus.OK);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Something went wrong", exception);
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<MentoriaDTO> getMentoriaById(@PathVariable Long id) {
-        return ResponseEntity.ok(mentoriaService.getMentoriaById(id));
+        try {
+            return new ResponseEntity<MentoriaDTO>(mentoriaService.getMentoriaById(id), HttpStatus.OK);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id not found", exception);
+        }
     }
 
     @PutMapping(value = "/{mentoriaId}/{mentorId}/{alunoId}")
     public ResponseEntity<MentoriaDTO> updateMentoria(@PathVariable("mentoriaId") Long mentoriaId,
                                                       @PathVariable("mentorId") Long mentorId,
                                                       @PathVariable("alunoId") Long alunoId) {
-        return ResponseEntity.ok(mentoriaService.updateMentoria(mentoriaId, mentorId, alunoId));
+        try {
+            return new ResponseEntity(mentoriaService.updateMentoria(mentoriaId, mentorId, alunoId), HttpStatus.ACCEPTED);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid parameters", exception);
+        }
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteMentoria(@PathVariable Long id) {
-        mentoriaService.deleteMentoria(id);
+        try {
+            mentoriaService.deleteMentoria(id);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id not found", exception);
+        }
     }
 }
