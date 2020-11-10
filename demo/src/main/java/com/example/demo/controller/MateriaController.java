@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -18,13 +19,22 @@ public class MateriaController {
 
     @PostMapping
     public ResponseEntity<MateriaDTO> createMateria(@RequestBody MateriaDTO materiaDTO) {
-        return ResponseEntity.ok(materiaService.createMateria(materiaDTO));
+        try {
+            return new ResponseEntity<MateriaDTO>(materiaService.createMateria(materiaDTO), HttpStatus.CREATED);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Parameters", exception);
+        }
     }
 
     @GetMapping()
     public ResponseEntity<List<MateriaDTO>> getMaterias() {
-        return new ResponseEntity<List<MateriaDTO>>(materiaService.getMaterias(), HttpStatus.ACCEPTED);
+        try {
+            return new ResponseEntity<List<MateriaDTO>>(materiaService.getMaterias(), HttpStatus.ACCEPTED);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Something went wrong", exception);
+        }
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<MateriaDTO> getMateria(@PathVariable("id") Long id) {
@@ -36,11 +46,20 @@ public class MateriaController {
     @PutMapping(value = "/{id}")
     public ResponseEntity<MateriaDTO> updateMateria(@PathVariable("id") Long id,
                                                     @RequestBody MateriaDTO materiaDTO) {
-        return ResponseEntity.ok(materiaService.updateMateria(materiaDTO, id));
+        try {
+            return new ResponseEntity(materiaService.updateMateria(materiaDTO, id), HttpStatus.ACCEPTED);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid parameters", exception);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteMateria(@PathVariable Long id) {
-        materiaService.deleteMateria(id);
+    public ResponseEntity deleteMateria(@PathVariable Long id) {
+        try {
+            materiaService.deleteMateria(id);
+            return ResponseEntity.accepted().build();
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id not found", exception);
+        }
     }
 }

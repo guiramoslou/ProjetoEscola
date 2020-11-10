@@ -19,7 +19,11 @@ public class AlunoController {
 
     @GetMapping()
     public ResponseEntity<List<AlunoDTO>> getAlunos() {
-        return new ResponseEntity<List<AlunoDTO>>(alunoService.getAlunos(), HttpStatus.OK);
+        try {
+            return new ResponseEntity<List<AlunoDTO>>(alunoService.getAlunos(), HttpStatus.OK);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Something went wrong", exception);
+        }
     }
 
     @GetMapping("/{id}")
