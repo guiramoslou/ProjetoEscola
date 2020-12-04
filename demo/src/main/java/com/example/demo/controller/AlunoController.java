@@ -42,6 +42,7 @@ public class AlunoController {
         }
     }
 
+    @CrossOrigin
     @PutMapping(value = "/{id}")
     public ResponseEntity<AlunoDTO> updateAluno(@PathVariable("id") Long id,
                                                 @RequestBody AlunoDTO alunoDTO) {
@@ -54,6 +55,7 @@ public class AlunoController {
         }
     }
 
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public ResponseEntity deleteAluno(@PathVariable Long id) {
         try {
