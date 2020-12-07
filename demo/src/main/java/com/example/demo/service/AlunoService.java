@@ -26,8 +26,8 @@ public class AlunoService {
 
     Pageable secondPageWithFiveElements = PageRequest.of(0, 5);
 
-    public Page<Aluno> getPageOfAlunos() {
-        Page<Aluno> allAlunos = repository.findAll(firstPageWithTwoElements);
+    public Page<Aluno> getPageOfAlunos(int page, int size) {
+        Page<Aluno> allAlunos = repository.findAll(PageRequest.of(page, size));
         return allAlunos;
     }
 

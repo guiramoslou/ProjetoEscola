@@ -19,13 +19,11 @@ public class AlunoController {
     @Autowired
     private AlunoService alunoService;
 
-    @GetMapping("/page")
-    public ResponseEntity<Page<Aluno>> getPageAlunos() {
-        try {
-            return new ResponseEntity<Page<Aluno>>(alunoService.getPageOfAlunos(), HttpStatus.OK);
-        } catch (Exception exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Something went wrong", exception);
-        }
+    @GetMapping(params = {"page", "size"})
+    public List<Aluno> findPaginated(@RequestParam("page") int page,
+                                     @RequestParam("size") int size) {
+        Page<Aluno> resultPage = alunoService.getPageOfAlunos(page, size);
+        return resultPage.getContent();
     }
 
     @GetMapping("/name")
