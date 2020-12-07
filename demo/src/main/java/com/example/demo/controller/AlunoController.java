@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.AlunoDTO;
+import com.example.demo.entity.Aluno;
 import com.example.demo.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,33 @@ public class AlunoController {
 
     @Autowired
     private AlunoService alunoService;
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<Aluno>> getPageAlunos() {
+        try {
+            return new ResponseEntity<Page<Aluno>>(alunoService.getPageOfAlunos(), HttpStatus.OK);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Something went wrong", exception);
+        }
+    }
+
+    @GetMapping("/name")
+    public ResponseEntity<List<Aluno>> getMaria() {
+        try {
+            return new ResponseEntity<List<Aluno>>(alunoService.getMaria(), HttpStatus.OK);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Something went wrong", exception);
+        }
+    }
+
+    @GetMapping("/sortByName")
+    public ResponseEntity<List<Aluno>> getAlunosSortByName() {
+        try {
+            return new ResponseEntity<List<Aluno>>(alunoService.getAlunosByName(), HttpStatus.OK);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Something went wrong", exception);
+        }
+    }
 
     @GetMapping()
     public ResponseEntity<List<AlunoDTO>> getAlunos() {
